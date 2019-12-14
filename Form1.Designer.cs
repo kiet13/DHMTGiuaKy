@@ -42,61 +42,74 @@
             this.btnEllipse = new System.Windows.Forms.Button();
             this.btnRectangle = new System.Windows.Forms.Button();
             this.pnToolbar = new System.Windows.Forms.Panel();
-            this.gbSize = new System.Windows.Forms.GroupBox();
+            this.btnPolygon = new System.Windows.Forms.Button();
+            this.gbColorChart = new System.Windows.Forms.GroupBox();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnPaint = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.gbSize = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.gbShape.SuspendLayout();
             this.gbEquiangular.SuspendLayout();
             this.pnToolbar.SuspendLayout();
+            this.gbColorChart.SuspendLayout();
             this.gbSize.SuspendLayout();
             this.SuspendLayout();
             // 
             // openGLControl
             // 
+            this.openGLControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.openGLControl.BackColor = System.Drawing.Color.White;
             this.openGLControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.openGLControl.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.openGLControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.openGLControl.DrawFPS = false;
-            this.openGLControl.Location = new System.Drawing.Point(12, 176);
+            this.openGLControl.ForeColor = System.Drawing.Color.White;
+            this.openGLControl.Location = new System.Drawing.Point(0, 188);
             this.openGLControl.Name = "openGLControl";
             this.openGLControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.openGLControl.RenderContextType = SharpGL.RenderContextType.DIBSection;
             this.openGLControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
-            this.openGLControl.Size = new System.Drawing.Size(739, 310);
+            this.openGLControl.Size = new System.Drawing.Size(763, 310);
             this.openGLControl.TabIndex = 0;
             this.openGLControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);
             this.openGLControl.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl_OpenGLDraw);
             this.openGLControl.Resized += new System.EventHandler(this.openGLControl_Resized);
+            this.openGLControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseClick);
             this.openGLControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
             this.openGLControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
             this.openGLControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
             // 
             // btnDrawLine
             // 
+            this.btnDrawLine.BackColor = System.Drawing.SystemColors.Control;
             this.btnDrawLine.Location = new System.Drawing.Point(6, 19);
             this.btnDrawLine.Name = "btnDrawLine";
             this.btnDrawLine.Size = new System.Drawing.Size(69, 39);
             this.btnDrawLine.TabIndex = 1;
             this.btnDrawLine.Text = "Line";
-            this.btnDrawLine.UseVisualStyleBackColor = true;
+            this.btnDrawLine.UseVisualStyleBackColor = false;
             this.btnDrawLine.Click += new System.EventHandler(this.btnDrawLine_Click);
             // 
             // btnDrawCircle
             // 
+            this.btnDrawCircle.BackColor = System.Drawing.SystemColors.Control;
             this.btnDrawCircle.Location = new System.Drawing.Point(78, 19);
             this.btnDrawCircle.Name = "btnDrawCircle";
             this.btnDrawCircle.Size = new System.Drawing.Size(69, 39);
             this.btnDrawCircle.TabIndex = 2;
             this.btnDrawCircle.Text = "Circle";
-            this.btnDrawCircle.UseVisualStyleBackColor = true;
+            this.btnDrawCircle.UseVisualStyleBackColor = false;
             this.btnDrawCircle.Click += new System.EventHandler(this.btnDrawCircle_Click);
             // 
             // btnColorChart
             // 
-            this.btnColorChart.Location = new System.Drawing.Point(311, 29);
+            this.btnColorChart.BackColor = System.Drawing.SystemColors.Control;
+            this.btnColorChart.Location = new System.Drawing.Point(6, 15);
             this.btnColorChart.Name = "btnColorChart";
-            this.btnColorChart.Size = new System.Drawing.Size(78, 39);
+            this.btnColorChart.Size = new System.Drawing.Size(30, 30);
             this.btnColorChart.TabIndex = 3;
-            this.btnColorChart.Text = "Color Chart";
-            this.btnColorChart.UseVisualStyleBackColor = true;
+            this.btnColorChart.UseVisualStyleBackColor = false;
             this.btnColorChart.Click += new System.EventHandler(this.btnColorChart_Click);
             // 
             // cboSize
@@ -143,65 +156,129 @@
             // 
             // btnHexagon
             // 
+            this.btnHexagon.BackColor = System.Drawing.SystemColors.Control;
             this.btnHexagon.Location = new System.Drawing.Point(188, 20);
             this.btnHexagon.Name = "btnHexagon";
             this.btnHexagon.Size = new System.Drawing.Size(80, 39);
             this.btnHexagon.TabIndex = 7;
             this.btnHexagon.Text = "Hexagon";
-            this.btnHexagon.UseVisualStyleBackColor = true;
+            this.btnHexagon.UseVisualStyleBackColor = false;
             this.btnHexagon.Click += new System.EventHandler(this.btnHexagon_Click);
             // 
             // btnPentagon
             // 
+            this.btnPentagon.BackColor = System.Drawing.SystemColors.Control;
             this.btnPentagon.Location = new System.Drawing.Point(97, 21);
             this.btnPentagon.Name = "btnPentagon";
             this.btnPentagon.Size = new System.Drawing.Size(80, 39);
             this.btnPentagon.TabIndex = 6;
             this.btnPentagon.Text = "Pentagon";
-            this.btnPentagon.UseVisualStyleBackColor = true;
+            this.btnPentagon.UseVisualStyleBackColor = false;
             this.btnPentagon.Click += new System.EventHandler(this.btnPentagon_Click);
             // 
             // btnTriangle
             // 
+            this.btnTriangle.BackColor = System.Drawing.SystemColors.Control;
             this.btnTriangle.Location = new System.Drawing.Point(6, 20);
             this.btnTriangle.Name = "btnTriangle";
             this.btnTriangle.Size = new System.Drawing.Size(80, 39);
             this.btnTriangle.TabIndex = 5;
             this.btnTriangle.Text = "Triangle";
-            this.btnTriangle.UseVisualStyleBackColor = true;
+            this.btnTriangle.UseVisualStyleBackColor = false;
             this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
             // 
             // btnEllipse
             // 
+            this.btnEllipse.BackColor = System.Drawing.SystemColors.Control;
             this.btnEllipse.Location = new System.Drawing.Point(150, 19);
             this.btnEllipse.Name = "btnEllipse";
             this.btnEllipse.Size = new System.Drawing.Size(69, 39);
             this.btnEllipse.TabIndex = 4;
             this.btnEllipse.Text = "Ellipse";
-            this.btnEllipse.UseVisualStyleBackColor = true;
+            this.btnEllipse.UseVisualStyleBackColor = false;
             this.btnEllipse.Click += new System.EventHandler(this.btnEllipse_Click);
             // 
             // btnRectangle
             // 
+            this.btnRectangle.BackColor = System.Drawing.SystemColors.Control;
             this.btnRectangle.Location = new System.Drawing.Point(222, 19);
             this.btnRectangle.Name = "btnRectangle";
             this.btnRectangle.Size = new System.Drawing.Size(69, 39);
             this.btnRectangle.TabIndex = 3;
             this.btnRectangle.Text = "Rectangle";
-            this.btnRectangle.UseVisualStyleBackColor = true;
+            this.btnRectangle.UseVisualStyleBackColor = false;
             this.btnRectangle.Click += new System.EventHandler(this.btnRectangle_Click);
             // 
             // pnToolbar
             // 
+            this.pnToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnToolbar.AutoSize = true;
             this.pnToolbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnToolbar.Controls.Add(this.btnPolygon);
+            this.pnToolbar.Controls.Add(this.gbColorChart);
+            this.pnToolbar.Controls.Add(this.btnSelect);
+            this.pnToolbar.Controls.Add(this.btnPaint);
             this.pnToolbar.Controls.Add(this.btnClear);
             this.pnToolbar.Controls.Add(this.gbSize);
             this.pnToolbar.Controls.Add(this.gbShape);
-            this.pnToolbar.Controls.Add(this.btnColorChart);
             this.pnToolbar.Location = new System.Drawing.Point(12, 2);
             this.pnToolbar.Name = "pnToolbar";
             this.pnToolbar.Size = new System.Drawing.Size(739, 168);
             this.pnToolbar.TabIndex = 6;
+            // 
+            // btnPolygon
+            // 
+            this.btnPolygon.Location = new System.Drawing.Point(600, 37);
+            this.btnPolygon.Name = "btnPolygon";
+            this.btnPolygon.Size = new System.Drawing.Size(75, 23);
+            this.btnPolygon.TabIndex = 11;
+            this.btnPolygon.Text = "Polygon";
+            this.btnPolygon.UseVisualStyleBackColor = true;
+            this.btnPolygon.Click += new System.EventHandler(this.btnPolygon_Click);
+            // 
+            // gbColorChart
+            // 
+            this.gbColorChart.Controls.Add(this.btnColorChart);
+            this.gbColorChart.Location = new System.Drawing.Point(311, 17);
+            this.gbColorChart.Name = "gbColorChart";
+            this.gbColorChart.Size = new System.Drawing.Size(47, 51);
+            this.gbColorChart.TabIndex = 10;
+            this.gbColorChart.TabStop = false;
+            this.gbColorChart.Text = "Color";
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSelect.Location = new System.Drawing.Point(504, 94);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(78, 39);
+            this.btnSelect.TabIndex = 9;
+            this.btnSelect.Text = "Select";
+            this.btnSelect.UseVisualStyleBackColor = false;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // btnPaint
+            // 
+            this.btnPaint.BackColor = System.Drawing.SystemColors.Control;
+            this.btnPaint.Location = new System.Drawing.Point(411, 94);
+            this.btnPaint.Name = "btnPaint";
+            this.btnPaint.Size = new System.Drawing.Size(78, 39);
+            this.btnPaint.TabIndex = 8;
+            this.btnPaint.Text = "Paint";
+            this.btnPaint.UseVisualStyleBackColor = false;
+            this.btnPaint.Click += new System.EventHandler(this.btnPaint_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.SystemColors.Control;
+            this.btnClear.Location = new System.Drawing.Point(311, 94);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(78, 39);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // gbSize
             // 
@@ -213,16 +290,6 @@
             this.gbSize.TabStop = false;
             this.gbSize.Text = "Size";
             // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(311, 94);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(78, 39);
-            this.btnClear.TabIndex = 7;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,12 +299,16 @@
             this.Controls.Add(this.openGLControl);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
             this.gbShape.ResumeLayout(false);
             this.gbEquiangular.ResumeLayout(false);
             this.pnToolbar.ResumeLayout(false);
+            this.gbColorChart.ResumeLayout(false);
             this.gbSize.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -259,6 +330,10 @@
         private System.Windows.Forms.Button btnPentagon;
         private System.Windows.Forms.Button btnTriangle;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnPaint;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.GroupBox gbColorChart;
+        private System.Windows.Forms.Button btnPolygon;
     }
 }
 
