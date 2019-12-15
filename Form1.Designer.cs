@@ -48,6 +48,7 @@
             this.btnPaint = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.gbSize = new System.Windows.Forms.GroupBox();
+            this.txtTime = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.gbShape.SuspendLayout();
             this.gbEquiangular.SuspendLayout();
@@ -215,6 +216,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnToolbar.AutoSize = true;
             this.pnToolbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnToolbar.Controls.Add(this.txtTime);
             this.pnToolbar.Controls.Add(this.btnPolygon);
             this.pnToolbar.Controls.Add(this.gbColorChart);
             this.pnToolbar.Controls.Add(this.btnSelect);
@@ -290,6 +292,13 @@
             this.gbSize.TabStop = false;
             this.gbSize.Text = "Size";
             // 
+            // txtTime
+            // 
+            this.txtTime.Location = new System.Drawing.Point(600, 104);
+            this.txtTime.Name = "txtTime";
+            this.txtTime.Size = new System.Drawing.Size(100, 20);
+            this.txtTime.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,6 +314,7 @@
             this.gbShape.ResumeLayout(false);
             this.gbEquiangular.ResumeLayout(false);
             this.pnToolbar.ResumeLayout(false);
+            this.pnToolbar.PerformLayout();
             this.gbColorChart.ResumeLayout(false);
             this.gbSize.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -334,6 +344,7 @@
         private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.GroupBox gbColorChart;
         private System.Windows.Forms.Button btnPolygon;
+        private System.Windows.Forms.TextBox txtTime;
     }
 }
 

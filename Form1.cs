@@ -25,9 +25,7 @@ namespace FirstSharpGLProject
 
         }
 
-       
-
-
+      
         /* Các lớp đối tượng hình học */
         public abstract class Shape
         {
@@ -144,18 +142,18 @@ namespace FirstSharpGLProject
             {
                 base.draw(gl);
                 gl.LineWidth(Size);
-                
                 gl.Begin(OpenGL.GL_LINES);
-                gl.Vertex(Start.X, gl.RenderContextProvider.Height - Start.Y);
-                gl.Vertex(End.X, gl.RenderContextProvider.Height - End.Y);
+                gl.Vertex(Start.X, Start.Y);
+                gl.Vertex(End.X, End.Y);
                 gl.End();
                 gl.Flush();// Thực hiện lệnh vẽ ngay lập tức thay vì đợi sau 1 khoảng thời gian
+                this.GenerateControlPoints(gl);
             }
 
             public override void GenerateControlPoints(OpenGL gl)
             {
-                Point point1 = new Point(Start.X, gl.RenderContextProvider.Height - Start.Y);
-                Point point2 = new Point(End.X, gl.RenderContextProvider.Height - End.Y);
+                Point point1 = new Point(Start.X, Start.Y);
+                Point point2 = new Point(End.X, End.Y);
 
                 ControlPoints.Add(point1);
                 ControlPoints.Add(point2);
@@ -163,7 +161,28 @@ namespace FirstSharpGLProject
 
             public override bool IsContain(int X, int Y)
             {
-                throw new NotImplementedException();
+                
+                float epsilon = 8.0f;
+              
+                float d1, d2;
+                d1 = (float)Math.Sqrt((X - Start.X) * (X - Start.X) + (Y - Start.Y) * (Y - Start.Y));
+                d2 = (float)Math.Sqrt((X - End.X) * (X - End.X) + (Y - End.Y) * (Y - End.Y));
+                if (d1 < epsilon || d2 < epsilon)
+                    return true;
+                else
+                {
+                    int a, b, c;
+                    a = End.Y - Start.Y;
+                    b = Start.X - End.X;
+                    c = End.X * Start.Y - Start.X * End.Y;
+
+                    float d;
+                    d = (float)Math.Abs(a * X + b * Y + c) / (float)Math.Sqrt(a * a + b * b);
+                    if (d < epsilon)
+                        return true;
+                }
+                return false;
+               
             }
         }
 
@@ -685,11 +704,15 @@ namespace FirstSharpGLProject
             foreach (Shape shape in shapes)
             {
                 shape.draw(gl);
-               
                 if (shape.IsPainted == true)
                 {
                     Point point = new Point(shape.SeedPoint.X, shape.SeedPoint.Y);
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     shape.BoundaryFill(gl, pixelArray);
+                    watch.Stop();
+                    float elapsedMs = watch.ElapsedMilliseconds;
+                    elapsedMs /= 1000;
+                    txtTime.Text = elapsedMs.ToString();
                     shape.IsPainted = false;
                 }
                 if (shape.IsClicked == true)
@@ -719,6 +742,7 @@ namespace FirstSharpGLProject
         bool isMove = false;
         Point oldStart = new Point();
         Point oldEnd = new Point();
+        Point oldSeedPoint = new Point();
         List<Point> oldControlPoints = new List<Point>();
         
         public Form1()
@@ -775,11 +799,10 @@ namespace FirstSharpGLProject
             gl.ClearColor(255, 255, 255, 255);
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
-
             LoadColor(gl, pixelArray);
             RedrawScreen(gl);
             
-
+           
             if (shShape == 0)
                 openGLControl.Cursor = System.Windows.Forms.Cursors.Default;
             else
@@ -796,8 +819,8 @@ namespace FirstSharpGLProject
                     case 1:
                         Line newLine = new Line
                         {
-                            Start = pStart,
-                            End = pEnd,
+                            Start = new Point(pStart.X, gl.RenderContextProvider.Height - pStart.Y),
+                            End = new Point(pEnd.X, gl.RenderContextProvider.Height - pEnd.Y),
                             BoundaryColor = userColor,
                             Size = shSize,
                             ControlPoints = new List<Point>()
@@ -807,7 +830,7 @@ namespace FirstSharpGLProject
                         if (drawing == 2)
                         {
                             newLine.GenerateControlPoints(gl);
-                            newLine.IsClicked = true;
+                           
                             shapes.Add(newLine);
                             drawing = 0;
                         }
@@ -903,10 +926,11 @@ namespace FirstSharpGLProject
 
                         Line line = new Line
                         {
-                            Start = pStart,
-                            End = pEnd,
+                            Start = new Point(pStart.X, gl.RenderContextProvider.Height - pStart.Y),
+                            End = new Point(pEnd.X, gl.RenderContextProvider.Height - pEnd.Y),
                             BoundaryColor = userColor,
-                            Size = shSize
+                            Size = shSize,
+                            ControlPoints = new List<Point>()
                         };
                         line.draw(gl);
                         if (drawing == 2)
@@ -914,9 +938,9 @@ namespace FirstSharpGLProject
                             if (isDrawPolygon == 1)
                             {
                                 shapes[shapes.Count - 1].ControlPoints.Add(
-                                    new Point(line.Start.X, gl.RenderContextProvider.Height - line.Start.Y));
+                                    new Point(line.Start.X, line.Start.Y));
                                 shapes[shapes.Count - 1].ControlPoints.Add(
-                                    new Point(line.End.X, gl.RenderContextProvider.Height - line.End.Y));
+                                    new Point(line.End.X, line.End.Y));
                                 pStart = pEnd;
                                 drawing = 1;
                             }
@@ -925,7 +949,7 @@ namespace FirstSharpGLProject
                                 Point firstControlPoints = new Point(shapes[shapes.Count - 1].ControlPoints[0].X,
                                     shapes[shapes.Count - 1].ControlPoints[0].Y);
                                 shapes[shapes.Count - 1].ControlPoints.Add(
-                                   new Point(line.Start.X, gl.RenderContextProvider.Height - line.Start.Y));
+                                   new Point(line.Start.X, line.Start.Y));
                                 shapes[shapes.Count - 1].ControlPoints.Add(firstControlPoints);
 
                                 isDrawPolygon = 0;
@@ -985,14 +1009,19 @@ namespace FirstSharpGLProject
             if (isMove == true)
             {
                 pEnd = e.Location;
+  
                 if (shapes[selectedIdx].GetType().Name != "Polygon")
                 {
                     int dx = pEnd.X - pStart.X;
                     int dy = pEnd.Y - pStart.Y;
+                    if (shapes[selectedIdx].GetType().Name == "Line")
+                        dy = -dy;
                     Point newStart = new Point(oldStart.X + dx, oldStart.Y + dy);
                     Point newEnd = new Point(oldEnd.X + dx, oldEnd.Y + dy);
+                    Point newSeedPoint = new Point(oldSeedPoint.X + dx, oldSeedPoint.Y + dy);
                     shapes[selectedIdx].Start = newStart;
                     shapes[selectedIdx].End = newEnd;
+                    shapes[selectedIdx].SeedPoint = newSeedPoint;
                     shapes[selectedIdx].ControlPoints.Clear();
                 }
                 else
@@ -1005,9 +1034,14 @@ namespace FirstSharpGLProject
                         int newY = oldControlPoints[i].Y + dy;
 
                         Point newPoint = new Point(newX, newY);
+                       
                         shapes[selectedIdx].ControlPoints[i] = newPoint;
+                        
                     }
+                    Point newSeedPoint = new Point(oldSeedPoint.X + dx, oldSeedPoint.Y + dy);
+                    shapes[selectedIdx].SeedPoint = newSeedPoint;
                 }
+                
             }
         }
 
@@ -1040,14 +1074,25 @@ namespace FirstSharpGLProject
 
                         if (shapes[i].GetType().Name == "Polygon")
                         {
+                            oldControlPoints.Clear();
                             foreach (Point point in shapes[i].ControlPoints)
                                 oldControlPoints.Add(point);
                         }
                         else
                         {
+                            //if (shapes[i].GetType().Name == "Line")
+                            //{
+                            //    oldStart = new Point(shapes[i].Start.X,
+                            //        gl.RenderContextProvider.Height - shapes[i].Start.Y);
+                            //    oldEnd = new Point(shapes[i].End.X,
+                            //        gl.RenderContextProvider.Height - shapes[i].End.Y);
+                            //}
+
                             oldStart = shapes[i].Start;
                             oldEnd = shapes[i].End;
+
                         }
+                        oldSeedPoint = shapes[i].SeedPoint;
                     }
                 }
             }
